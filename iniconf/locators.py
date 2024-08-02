@@ -2,7 +2,7 @@ from selenium.webdriver.common.by import By
 class Locators:
 
     # Кнопка "Войти в аккаунт" на главной странице
-    entrance_on_the_main = (By.XPATH, ".//button[contains(text(),'Войти в аккаунт')]")
+    entrance_on_the_main = (By.XPATH, "//button[text()='Войти в аккаунт']")
 
     # Основное лого
     logo = (By.XPATH, '//*[@id="root"]/div/header/nav/div')
@@ -28,12 +28,14 @@ class Locators:
     # Раздел "Начинки"
     inscription_fillings = (By.XPATH, ".//span[contains(text(),'Начинки')]")
 
-    # Нажали на раздел "Начинки/Хлеб/Соус"
-    chapter = (By.XPATH, '//*[@id="root"]/div/main/section[1]/div[2]/ul[3]')
-
+    # Активный раздел с начинками
+    active_section = (By.XPATH, '//div[contains(@class, "tab_tab_type_current")]')
 
     # Надпись "Такой пользователь уже существует"
     inscription_error_account = (By.XPATH, ".//p[contains(text(),'Такой пользователь уже существует')]")
+
+    # Надпись "Некорректный пароль"
+    inscription_error_password = (By.XPATH, '//div[contains(@class, "input_status_error")]')
 
     # Кнопка "востановить пароль"
     button_restore_password = (By.XPATH, './/a[@href="/forgot-password"]')

@@ -20,8 +20,6 @@ class EmailPasswordGenerator:
 generator = EmailPasswordGenerator()
 
 email, password = generator.generate()
-print(f"Email: {email}\\nPassword: {password}")
 
 # Повторный вызов метода для проверки
 email2, password2 = generator.generate()
-print(f"Email: {email2}\\nPassword: {password2}")

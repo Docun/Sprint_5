@@ -1,4 +1,5 @@
 from selenium import webdriver
+from iniconf.curl import *
 from iniconf.locators import Locators
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
@@ -14,19 +15,27 @@ def driver():
     yield driver
     driver.quit()
 
+
 @pytest.fixture
 def start_from_login_page(driver):
+    login_page = login_site
+    driver.get(login_page)
     email = 'igor008@yandex.ru'
     password = '123456789'
-    login_page = 'https://stellarburgers.nomoreparties.site/login'
-    driver.get(login_page)
-    authorization_entrance(driver, email, password)
+
+    # Ищем поля и проходим авторизацию
+    driver.find_element(*Locators.field_email).send_keys(email)
+    driver.find_element(*Locators.field_password).send_keys(password)
+    driver.find_element(*Locators.button_entrance).click()
+
     return driver
 
 @pytest.fixture
 def start_from_recovery_page(driver):
-    login_page = 'https://stellarburgers.nomoreparties.site/login'
+    login_page = login_site
     driver.get(login_page)
+    email = 'igor008@yandex.ru'
+    password = '123456789'
 
     # Кликаем по кнопке "востановить пароль"
     driver.find_element(*Locators.button_restore_password).click()
@@ -37,17 +46,20 @@ def start_from_recovery_page(driver):
     # Кликаем по маленькой кнопке "войти"
     driver.find_element(*Locators.inscription_button_entrance).click()
 
-    # Вход в систему
-    email = 'igor008@yandex.ru'
-    password = '123456789'
-    authorization_entrance(driver, email, password)
+    # Ищем поля и проходим авторизацию
+    driver.find_element(*Locators.field_email).send_keys(email)
+    driver.find_element(*Locators.field_password).send_keys(password)
+    driver.find_element(*Locators.button_entrance).click()
+
 
     return driver
 
 @pytest.fixture
 def start_from_main_page(driver):
-    main_page = 'https://stellarburgers.nomoreparties.site/'
+    main_page = main_site
     driver.get(main_page)
+    email = 'igor008@yandex.ru'
+    password = '123456789'
 
     # Кликаем по кнопке "личный кабинет"
     driver.find_element(*Locators.button_personal_area).click()
@@ -55,38 +67,47 @@ def start_from_main_page(driver):
     # Кликаем по маленькой кнопке "войти"
     driver.find_element(*Locators.button_entrance).click()
 
-    # Вход в систему
-    email = 'igor008@yandex.ru'
-    password = '123456789'
-    authorization_entrance(driver, email, password)
+    # Ищем поля и проходим авторизацию
+    driver.find_element(*Locators.field_email).send_keys(email)
+    driver.find_element(*Locators.field_password).send_keys(password)
+    driver.find_element(*Locators.button_entrance).click()
 
     return driver
 
 @pytest.fixture
 def start_from_register_page(driver):
-    register_page = 'https://stellarburgers.nomoreparties.site/register'
+    register_page = register_site
     driver.get(register_page)
+    email = 'igor008@yandex.ru'
+    password = '123456789'
 
     # Находим надпись "войти" и жмем
     driver.find_element(*Locators.inscription_button_entrance).click()
 
-    # Вход в систему
-    email = 'igor008@yandex.ru'
-    password = '123456789'
-    authorization_entrance(driver, email, password)
+    # Ищем поля и проходим авторизацию
+    driver.find_element(*Locators.field_email).send_keys(email)
+    driver.find_element(*Locators.field_password).send_keys(password)
+    driver.find_element(*Locators.button_entrance).click()
 
     return driver
 
 @pytest.fixture
 def start_from_main_not_login(driver):
-    login_page = 'https://stellarburgers.nomoreparties.site/login'
+    login_page = login_site
+    driver.get(login_page)
+
+    return driver
+
+@pytest.fixture
+def start_from_site_not_login(driver):
+    login_page = main_site
     driver.get(login_page)
 
     return driver
 
 @pytest.fixture
 def resister_new_account(driver):
-    login_page = 'https://stellarburgers.nomoreparties.site/login'
+    login_page = login_site
     driver.get(login_page)
 
     # Кликаем по надписи "Зарегистрироваться"
@@ -115,10 +136,5 @@ def resister_new_account(driver):
     return driver, email, password
 
 
-
-def authorization_entrance(driver, email, password):
-    driver.find_element(*Locators.field_email).send_keys(email)
-    driver.find_element(*Locators.field_password).send_keys(password)
-    driver.find_element(*Locators.button_entrance).click()
 
 

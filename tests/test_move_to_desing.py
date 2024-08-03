@@ -1,8 +1,7 @@
-import pytest
 from iniconf.locators import Locators
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-
+import pytest
 
 @pytest.mark.usefixtures("start_from_login_page")
 class TestCheckChapterBread:
